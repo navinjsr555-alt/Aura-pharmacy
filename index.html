@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%2300F29D%22/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>AuraRx - Premium Pharmacy, Delivery & Lab Tests On-Call</title>
+    <meta name="description" content="AuraRx brings 2-hour medicine delivery, home blood sample collection, certified lab tests on call, and smart virtual health tracking directly to your devices with premium care." />
+    <meta name="keywords" content="pharmacy, medicine delivery, blood sample collection, blood test on call, online medicine, health portal" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vite Entry Script (loads main.js which imports style.css) -->
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <!-- Theme Background Mesh -->
+    <div class="glow-bg"></div>
+
+    <!-- 3D Canvas Viewport (Fixed behind/around elements for scroll animation) -->
+    <div id="canvas-container">
+      <canvas id="three-canvas"></canvas>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="#" class="brand-logo" id="brand-logo">
+          <!-- Minimalist SVG Logo representing geometric leaf wrapping a pill -->
+          <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00F29D" />
+                <stop offset="100%" stop-color="#0B6DF6" />
+              </linearGradient>
+            </defs>
+            <path class="leaf" d="M50 15 C65 25, 75 45, 75 60 C75 75, 60 85, 50 85 C40 85, 25 75, 25 60 C25 45, 35 25, 50 15 Z" fill="none" stroke="url(#logo-grad)" stroke-width="6" />
+            <rect class="pill" x="38" y="45" width="24" height="18" rx="12" fill="url(#logo-grad)" />
+            <line x1="50" y1="45" x2="50" y2="63" stroke="#0B0F19" stroke-width="2" />
+          </svg>
+          <span class="brand-name">Aura<span>Rx</span></span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="#store" class="nav-link">Store</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#ai-scanner" class="nav-link">AI Scanner</a>
+          <a href="#health-hub" class="nav-link">Health Hub</a>
+          <a href="#order-tracker-section" class="nav-link">Track Order</a>
+          <a href="#emergency" class="nav-link">Emergency</a>
+          <a href="#opd-search" class="nav-link">Find OPD Doctor</a>
+          <a href="#med-finder" class="nav-link" id="med-finder-nav-btn">Find Nearby</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle Theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+
+          <button class="cart-btn" id="cart-toggle-btn" aria-label="Open Shopping Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <span class="cart-badge" id="cart-badge-count">0</span>
+          </button>
+
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Navigation Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#store" class="mobile-link">Store</a>
+      <a href="#services" class="mobile-link">Services</a>
+      <a href="#ai-scanner" class="mobile-link">AI Scanner</a>
+      <a href="#health-hub" class="mobile-link">Health Hub</a>
+      <a href="#order-tracker-section" class="mobile-link">Track Order</a>
+      <a href="#emergency" class="mobile-link">Emergency</a>
+      <a href="#opd-search" class="mobile-link">Find OPD Doctor</a>
+      <a href="#med-finder" class="mobile-link" id="med-finder-mobile-btn">Find Nearby</a>
+    </div>
+
+    <!-- Main Container -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section" id="hero">
+        <div class="hero-content">
+          <span class="tagline">Local Pharmacy Store • Always Caring</span>
+          <h1 class="hero-title">Your Health, <br><span class="gradient-text">Redefined.</span></h1>
+          <p class="hero-subtitle">
+            Premium care from AuraRx. Access 2-hour medicine delivery, home blood sample collection, on-call laboratory tests, and real-time medical tools all in one responsive dashboard.
+          </p>
+          
+          <div class="hero-search-bar">
+            <input type="text" id="hero-search-input" placeholder="Search medicines, vitamins, wellness..." />
+            <button class="btn-primary" id="hero-search-btn">Search</button>
+          </div>
+
+          <div class="search-chips">
+            <span class="chip">Pain Relief</span>
+            <span class="chip">Vitamin C</span>
+            <span class="chip">Diabetes</span>
+            <span class="chip">Skin Care</span>
+          </div>
+
+          <div class="hero-buttons">
+            <a href="#store" class="btn-primary">Order Medicines</a>
+            <a href="#services" class="btn-secondary">Book Lab Test</a>
+          </div>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card glass-card">
+            <h3>⚡ 2 Hr</h3>
+            <p>Express Home Delivery</p>
+          </div>
+          <div class="stat-card glass-card">
+            <h3>🔬 100%</h3>
+            <p>Certified Lab Reports</p>
+          </div>
+          <div class="stat-card glass-card">
+            <h3>👨‍⚕️ 24/7</h3>
+            <p>On-Call Consultations</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scroll Interactive Section Spacer / Scene Hook -->
+      <section class="scroll-trigger-section" id="trigger-one">
+        <div class="container-narrow text-center">
+          <h2 class="sub-headline">Dynamic 3D Medical Technology</h2>
+          <p class="sub-desc">As you scroll, our interactive 3D environment scales, shifts, and adapts to guide you through our core pharmacy services, ensuring a reliable, modern user experience.</p>
+        </div>
+      </section>
+
+      <!-- Medicine Categories Section -->
+      <section class="store-section" id="store">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">AuraRx Store</span>
+            <h2 class="section-title">Categories of Medicine & Wellness</h2>
+            <p class="section-desc">Filter and search through our curated medicinal collections. Fast local shipping guaranteed.</p>
+          </div>
+
+          <div class="category-tabs" id="category-tabs">
+            <button class="tab-btn active" data-category="all">All Products</button>
+            <button class="tab-btn" data-category="prescriptions">Prescriptions</button>
+            <button class="tab-btn" data-category="wellness">Wellness & Vitamins</button>
+            <button class="tab-btn" data-category="personal-care">Personal Care</button>
+            <button class="tab-btn" data-category="chronic-care">Chronic & Home Care</button>
+          </div>
+
+          <div class="products-grid" id="products-grid">
+            <!-- Products loaded dynamically via main.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section (Delivery & Blood Tests) -->
+      <section class="services-section" id="services">
+        <div class="container">
+          <div class="section-header text-center">
+            <span class="section-tag">On-Call Services</span>
+            <h2 class="section-title">Certified At-Home Healthcare</h2>
+            <p class="section-desc">Need testing or fast delivery? Schedule expert services with certified practitioners directly from your home.</p>
+          </div>
+
+          <div class="services-grid">
+            <!-- Delivery Options -->
+            <div class="service-card glass-card">
+              <div class="service-icon">⚡</div>
+              <h3>2-Hour Express Delivery</h3>
+              <p>We dispatch local couriers within minutes of order verification. Real-time temperature control ensures insulin and other sensitive drugs arrive safely.</p>
+              <ul class="service-list">
+                <li>📍 Local 10km Radius</li>
+                <li>📦 Temp-controlled boxes</li>
+                <li>💳 Cash or Digital pay on arrival</li>
+              </ul>
+              <a href="#store" class="btn-primary w-full text-center">Explore Store</a>
+            </div>
+
+            <!-- Blood Sample Collection & Lab Tests -->
+            <div class="service-card glass-card highlight-card">
+              <div class="service-icon">🔬</div>
+              <h3>Blood Sample Collection & Test On Call</h3>
+              <p>Book a certified, professional phlebotomist to collect your blood sample securely at your home or office. Reports delivered digitally within 12 hours.</p>
+              
+              <div class="popular-tests">
+                <span class="test-pill" data-test="Complete Blood Count (CBC)">CBC (Blood Count)</span>
+                <span class="test-pill" data-test="Lipid Profile">Lipid Profile</span>
+                <span class="test-pill" data-test="Thyroid Profile (T3, T4, TSH)">Thyroid Profile</span>
+                <span class="test-pill" data-test="HbA1c / Diabetes Check">HbA1c / Diabetes</span>
+              </div>
+
+              <button class="btn-accent w-full" id="open-booking-modal-btn">Book Collection Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Prescription Scanner & Extra Features Section -->
+      <section class="features-section" id="ai-scanner">
+        <div class="container">
+          <div class="section-header text-center">
+            <span class="section-tag">Smart Health Tools</span>
+            <h2 class="section-title">Exclusive Smart Features</h2>
+            <p class="section-desc">Explore AI prescription scanning, instant health calculators, specialist consultations, and automatic pill reminders.</p>
+          </div>
+
+          <div class="features-grid">
+            <!-- AI Prescription Scanner -->
+            <div class="feature-card glass-card" id="prescription-scanner-card">
+              <div class="card-glow"></div>
+              <h3>📂 AI Prescription Scanner</h3>
+              <p class="card-sub">Drag and drop your written doctor prescription. Our simulated AI processes hand-written drugs and adds them directly to your order list.</p>
+              
+              <div class="scanner-dropzone" id="scanner-dropzone">
+                <div class="scanner-laser" id="scanner-laser"></div>
+                <div class="dropzone-content" id="dropzone-text">
+                  <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                  <p>Drag prescription file here or <span>browse</span></p>
+                  <small>Supports PNG, JPG, PDF (Mock Reader)</small>
+                </div>
+                <div class="scanning-loader hidden" id="scanning-loader">
+                  <div class="spinner"></div>
+                  <p id="scanning-status">Reading handwriting...</p>
+                </div>
+              </div>
+              <input type="file" id="scanner-file-input" class="hidden" accept="image/*,application/pdf" />
+            </div>
+
+            <!-- Health Hub (BMI & Water Tracker) -->
+            <div class="feature-card glass-card" id="health-hub">
+              <h3>🥤 Smart Health Hub</h3>
+              <p class="card-sub">Quickly calculate essential health indices to optimize daily physical status.</p>
+              
+              <div class="health-calculators">
+                <!-- BMI Calculator -->
+                <div class="hub-subcard">
+                  <h4>BMI Calculator</h4>
+                  <div class="hub-inputs">
+                    <input type="number" id="bmi-weight" placeholder="Weight (kg)" min="10" max="300" />
+                    <input type="number" id="bmi-height" placeholder="Height (cm)" min="50" max="250" />
+                  </div>
+                  <button class="btn-secondary w-full" id="calculate-bmi-btn">Calculate BMI</button>
+                  <div class="bmi-result hidden" id="bmi-result-output">
+                    <p>Your BMI: <strong id="bmi-value">22.4</strong> (<span id="bmi-cat">Normal</span>)</p>
+                  </div>
+                </div>
+
+                <!-- Hydration Wave Tracker -->
+                <div class="hub-subcard">
+                  <h4>Daily Hydration Log</h4>
+                  <div class="water-container">
+                    <div class="water-wave" id="water-wave">
+                      <div class="wave-text"><span id="water-logged">0.0</span> / 2.5 L</div>
+                    </div>
+                  </div>
+                  <div class="water-actions">
+                    <button class="btn-sm" id="add-water-250">+250ml</button>
+                    <button class="btn-sm" id="add-water-500">+500ml</button>
+                    <button class="btn-sm btn-danger" id="reset-water">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pill Reminder Alarm System -->
+            <div class="feature-card glass-card">
+              <h3>⏰ Intake Pill Reminder</h3>
+              <p class="card-sub">Never miss a dose. Input your medication schedule to receive responsive browser-based reminders.</p>
+              
+              <form class="reminder-form" id="reminder-form">
+                <input type="text" id="remind-pill-name" placeholder="Pill Name (e.g. Lipitor)" required />
+                <div class="reminder-row">
+                  <input type="time" id="remind-time" required />
+                  <button type="submit" class="btn-primary">Add Alert</button>
+                </div>
+              </form>
+
+              <div class="reminder-list-wrapper">
+                <h4>Active Reminders</h4>
+                <ul class="reminder-list" id="reminder-list">
+                  <li class="empty-list-msg">No active reminders scheduled.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- On-Call Consultation Booking -->
+            <div class="feature-card glass-card">
+              <h3>👨‍⚕️ On-Call Doctor Consultation</h3>
+              <p class="card-sub">Need immediate medical advice? Book a virtual 15-minute consultation with a verified medical expert.</p>
+              
+              <div class="doctors-list">
+                <div class="doctor-card active" data-doc="Dr. Sarah Lin (Cardiologist)">
+                  <div class="doc-avatar">👩‍⚕️</div>
+                  <div class="doc-info">
+                    <strong>Dr. Sarah Lin</strong>
+                    <span>Cardiologist • 8 yrs exp</span>
+                  </div>
+                  <span class="doc-status available">Online</span>
+                </div>
+                <div class="doctor-card" data-doc="Dr. James Miller (General Practitioner)">
+                  <div class="doc-avatar">👨‍⚕️</div>
+                  <div class="doc-info">
+                    <strong>Dr. James Miller</strong>
+                    <span>General Practitioner • 12 yrs exp</span>
+                  </div>
+                  <span class="doc-status available">Online</span>
+                </div>
+              </div>
+
+              <button class="btn-primary w-full mt-4" id="consultation-book-btn">Initiate Instant Consult Call</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Order Status / Timeline Section -->
+      <section class="order-tracker-section" id="order-tracker-section">
+        <div class="container-narrow">
+          <div class="section-header text-center">
+            <span class="section-tag">Orders</span>
+            <h2 class="section-title">Active Order Progress</h2>
+            <p class="section-desc">Place an order in our store to see the real-time tracking update here.</p>
+          </div>
+
+          <div class="tracker-card glass-card">
+            <div class="tracker-header">
+              <div>
+                <p class="track-id">Order Ref: <span id="track-order-id">#ARX-000000</span></p>
+                <p class="track-date">Status updated: <span id="track-time">No active order</span></p>
+              </div>
+              <span class="track-badge idle" id="track-status-badge">Idle</span>
+            </div>
+
+            <!-- Timeline Diagram -->
+            <div class="timeline">
+              <div class="timeline-step active" id="step-1">
+                <div class="step-dot"></div>
+                <div class="step-label">Placed</div>
+              </div>
+              <div class="timeline-step" id="step-2">
+                <div class="step-dot"></div>
+                <div class="step-label">Packed</div>
+              </div>
+              <div class="timeline-step" id="step-3">
+                <div class="step-dot"></div>
+                <div class="step-label">Out for Delivery</div>
+              </div>
+              <div class="timeline-step" id="step-4">
+                <div class="step-dot"></div>
+                <div class="step-label">Delivered</div>
+              </div>
+            </div>
+
+            <div class="tracker-footer mt-6 hidden" id="tracker-footer-actions">
+              <p class="info-text text-sm">🚚 Estimated arrival: <strong>1.5 Hours</strong></p>
+              <button class="btn-sm btn-secondary mt-2" id="cancel-order-btn">Cancel Order</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+         12. EMERGENCY SECTION - 24/7 Ambulance Service
+         ============================================ -->
+      <section class="emergency-section" id="emergency">
+        <div class="container">
+          <div class="section-header text-center">
+            <span class="section-tag emergency-tag">🚨 24/7 Emergency</span>
+            <h2 class="section-title">Immediate Medical Assistance</h2>
+            <p class="section-desc">One-tap access to emergency services, ambulance tracking, and critical care support — available around the clock.</p>
+          </div>
+
+          <!-- SOS Button -->
+          <div class="sos-container" id="sos-container">
+            <button class="sos-btn" id="sos-btn">
+              <span class="sos-inner">SOS</span>
+            </button>
+            <p class="sos-label">Tap for Emergency Dispatch</p>
+          </div>
+
+          <!-- Emergency Contacts Row -->
+          <div class="emergency-contacts" id="emergency-contacts">
+            <div class="em-contact-card glass-card" data-phone="911">
+              <div class="em-icon">🚑</div>
+              <h4>Ambulance</h4>
+              <p class="em-phone">911</p>
+              <p class="em-desc">Immediate medical dispatch</p>
+              <button class="btn-sm em-call-btn" data-phone="911">📞 Call Now</button>
+            </div>
+            <div class="em-contact-card glass-card" data-phone="101">
+              <div class="em-icon">🔥</div>
+              <h4>Fire Department</h4>
+              <p class="em-phone">101</p>
+              <p class="em-desc">Fire & rescue services</p>
+              <button class="btn-sm em-call-btn" data-phone="101">📞 Call Now</button>
+            </div>
+            <div class="em-contact-card glass-card" data-phone="100">
+              <div class="em-icon">👮</div>
+              <h4>Police</h4>
+              <p class="em-phone">100</p>
+              <p class="em-desc">Law enforcement</p>
+              <button class="btn-sm em-call-btn" data-phone="100">📞 Call Now</button>
+            </div>
+            <div class="em-contact-card glass-card" data-phone="102">
+              <div class="em-icon">☠️</div>
+              <h4>Poison Control</h4>
+              <p class="em-phone">102</p>
+              <p class="em-desc">Toxic exposure help</p>
+              <button class="btn-sm em-call-btn" data-phone="102">📞 Call Now</button>
+            </div>
+          </div>
+
+          <!-- Live Ambulance Tracker -->
+          <div class="ambulance-tracker glass-card" id="ambulance-tracker">
+            <div class="tracker-header">
+              <h3><span class="live-dot"></span> Live Ambulance Tracking</h3>
+              <span class="tracker-status" id="ambulance-status">Standby</span>
+            </div>
+            <div class="ambulance-timeline" id="ambulance-timeline">
+              <div class="amb-step active" data-step="1">
+                <div class="amb-dot"></div>
+                <div class="amb-label">SOS Received</div>
+              </div>
+              <div class="amb-step" data-step="2">
+                <div class="amb-dot"></div>
+                <div class="amb-label">Ambulance Dispatched</div>
+              </div>
+              <div class="amb-step" data-step="3">
+                <div class="amb-dot"></div>
+                <div class="amb-label">En Route</div>
+              </div>
+              <div class="amb-step" data-step="4">
+                <div class="amb-dot"></div>
+                <div class="amb-label">Arriving in <span id="amb-eta">--</span> min</div>
+              </div>
+            </div>
+            <div class="ambulance-map-sim" id="ambulance-map-sim">
+              <div class="map-grid"></div>
+              <div class="ambulance-marker" id="ambulance-marker">🚑</div>
+              <div class="destination-marker">📍</div>
+            </div>
+            <div class="ambulance-actions">
+              <button class="btn-accent" id="simulate-ambulance-btn">🚑 Simulate Ambulance Dispatch</button>
+              <button class="btn-sm btn-danger" id="cancel-ambulance-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+         13. OPD DOCTOR SEARCH SECTION
+         ============================================ -->
+      <section class="opd-section" id="opd-search">
+        <div class="container">
+          <div class="section-header text-center">
+            <span class="section-tag">👨‍⚕️ OPD Consultation</span>
+            <h2 class="section-title">Find the Right Specialist</h2>
+            <p class="section-desc">Search and book appointments with top doctors across specialties, hospitals, and experience levels.</p>
+          </div>
+
+          <!-- Filter Bar -->
+          <div class="opd-filters" id="opd-filters">
+            <div class="filter-group">
+              <label>Body Part / Organ</label>
+              <select id="filter-bodypart">
+                <option value="all">All</option>
+                <option value="heart">Heart</option>
+                <option value="brain">Brain</option>
+                <option value="lungs">Lungs</option>
+                <option value="eyes">Eyes</option>
+                <option value="bones">Bones / Joints</option>
+                <option value="skin">Skin</option>
+                <option value="kidney">Kidney</option>
+                <option value="digestive">Digestive System</option>
+                <option value="ent">Ear, Nose, Throat</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Symptoms</label>
+              <select id="filter-symptoms">
+                <option value="all">All</option>
+                <option value="chest-pain">Chest Pain</option>
+                <option value="headache">Headache / Migraine</option>
+                <option value="fever">Fever / Cough</option>
+                <option value="vision-blur">Vision Blur</option>
+                <option value="joint-pain">Joint / Back Pain</option>
+                <option value="skin-rash">Skin Rash / Allergy</option>
+                <option value="abdominal">Abdominal Pain</option>
+                <option value="urinary">Urinary Issues</option>
+                <option value="dizziness">Dizziness</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Age Group</label>
+              <select id="filter-agegroup">
+                <option value="all">All Ages</option>
+                <option value="0-12">Children (0-12)</option>
+                <option value="13-30">Young Adults (13-30)</option>
+                <option value="31-55">Adults (31-55)</option>
+                <option value="55+">Seniors (55+)</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Gender</label>
+              <select id="filter-gender">
+                <option value="all">Any</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <button class="btn-primary" id="opd-search-btn">🔍 Search Doctors</button>
+          </div>
+
+          <!-- Doctor Results Grid -->
+          <div class="opd-results" id="opd-results">
+            <div class="opd-empty">Adjust filters and click "Search Doctors" to find specialists.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Slide-Out Shopping Cart Drawer -->
+    <div class="cart-drawer" id="cart-drawer">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="cart-close-btn" id="cart-close-btn" aria-label="Close Cart">&times;</button>
+      </div>
+
+      <div class="cart-items" id="cart-items-container">
+        <!-- Dynamic cart items list -->
+        <div class="cart-empty-message">Your cart is currently empty.</div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Express Delivery Fee</span>
+          <span id="cart-shipping">$0.00</span>
+        </div>
+        <div class="cart-summary-row total-row">
+          <span>Total</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+
+        <div class="delivery-address-form mt-4">
+          <label for="cart-address-input">Delivery Address</label>
+          <input type="text" id="cart-address-input" placeholder="123 Health Ave, Apt 4B" required />
+        </div>
+
+        <button class="checkout-btn btn-primary w-full mt-4" id="checkout-submit-btn" disabled>Proceed to Checkout</button>
+      </div>
+    </div>
+    <!-- Cart Drawer Backdrop Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Booking Modal (For Blood test / Phlebotomy collection) -->
+    <div class="modal" id="booking-modal">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>🔬 Book Blood Sample Collection</h3>
+          <button class="modal-close" id="booking-modal-close-btn">&times;</button>
+        </div>
+        <form id="blood-booking-form">
+          <div class="form-group">
+            <label for="book-patient-name">Patient Full Name</label>
+            <input type="text" id="book-patient-name" required placeholder="John Doe" />
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="book-patient-age">Age</label>
+              <input type="number" id="book-patient-age" required min="1" max="120" placeholder="30" />
+            </div>
+            <div class="form-group">
+              <label for="book-patient-phone">Phone Number</label>
+              <input type="tel" id="book-patient-phone" required placeholder="555-0199" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="book-test-type">Select Lab Test Profile</label>
+            <select id="book-test-type" required>
+              <option value="Complete Blood Count (CBC)">Complete Blood Count (CBC) - $29.99</option>
+              <option value="Lipid Profile">Lipid Profile (Cholesterol) - $39.99</option>
+              <option value="Thyroid Profile (T3, T4, TSH)">Thyroid Profile (T3, T4, TSH) - $49.99</option>
+              <option value="HbA1c / Diabetes Check">HbA1c (Diabetes Tracker) - $34.99</option>
+              <option value="Comprehensive Health Package">Comprehensive Package (All Tests) - $99.99</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="book-date-time">Preferred Appointment Date & Time</label>
+            <input type="datetime-local" id="book-date-time" required />
+          </div>
+
+          <div class="form-group">
+            <label for="book-address">Collection Address</label>
+            <textarea id="book-address" required rows="2" placeholder="Street Address, City, Zip Code"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-full mt-2">Schedule Phlebotomist Appointment</button>
+        </form>
+      </div>
+    </div>
+    <!-- Modal Backdrop -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Alert / System Notification Banner -->
+    <div class="sys-alert" id="system-alert">
+      <div class="alert-content">
+        <span class="alert-icon">🔔</span>
+        <span class="alert-message" id="system-alert-msg">Notification Message</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <span class="footer-brand">Aura<span>Rx</span></span>
+          <p class="footer-tagline">Providing professional pharmacy solutions, fast home delivery, and certified diagnostic tests directly to our neighborhood since 2026.</p>
+        </div>
+        <div>
+          <h4>Store Hours</h4>
+          <p>📅 Monday - Sunday</p>
+          <p>⏰ 24 Hours (On-Call & Online)</p>
+          <p>🏢 Walk-in Store: 8:00 AM - 10:00 PM</p>
+        </div>
+        <div>
+          <h4>Contact & Location</h4>
+          <p>📞 Phone: +1 (555) 789-AURA</p>
+          <p>📧 Email: support@aurarx.com</p>
+          <p>📍 Address: 404 Wellness Blvd, Healing Circle, NY</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 AuraRx Pharmacy Store. All rights reserved. Built with Three.js & GSAP.</p>
+      </div>
+    </footer>
+  <!-- ============================================
+        NEARBY MEDICINE FINDER DRAWER
+       ============================================ -->
+  <div class="med-finder-drawer" id="med-finder-drawer">
+    <div class="finder-header">
+      <h2><span class="finder-icon">📍</span> Find Nearby Pharmacy</h2>
+      <button class="finder-close-btn" id="finder-close-btn" aria-label="Close Finder">&times;</button>
+    </div>
+
+    <div class="finder-body">
+      <!-- Medicine Search Input + AI Upload -->
+      <div class="finder-section">
+        <label class="finder-label">Search Medicines</label>
+        <div class="medicine-search-row">
+          <div class="medicine-tag-input-wrapper">
+            <div class="medicine-chips-container" id="medicine-chips-container">
+              <!-- Chips added dynamically -->
+              <span class="chip-placeholder" id="chip-placeholder">e.g. Paracetamol, Aspirin...</span>
+            </div>
+            <input type="text" id="medicine-input" class="medicine-input" placeholder="Type medicine name & press Enter" />
+          </div>
+          <button class="btn-upload-prescription" id="btn-upload-prescription" title="Upload Prescription / List">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Upload Rx</span>
+          </button>
+        </div>
+        <!-- AI Scanner Overlay (hidden by default) -->
+        <div class="ai-scanner-overlay hidden" id="ai-scanner-overlay">
+          <div class="ai-scanner-content">
+            <div class="ai-scanner-spinner">
+              <div class="ai-spinner-ring"></div>
+              <div class="ai-spinner-ring-inner"></div>
+            </div>
+            <div class="ai-scanner-text">
+              <p class="ai-scanner-title" id="ai-scanner-title">AI Reading Prescription...</p>
+              <p class="ai-scanner-sub" id="ai-scanner-sub">Extracting medicine names</p>
+            </div>
+            <div class="ai-scanner-progress" id="ai-scanner-progress">
+              <div class="ai-progress-bar" id="ai-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="prescription-file-input" class="hidden" accept="image/*,.pdf" />
+        <div class="medicine-suggestions" id="medicine-suggestions">
+          <span class="suggestion-chip" data-medicine="Paracetamol">Paracetamol</span>
+          <span class="suggestion-chip" data-medicine="Aspirin">Aspirin</span>
+          <span class="suggestion-chip" data-medicine="Amoxicillin">Amoxicillin</span>
+          <span class="suggestion-chip" data-medicine="Metformin">Metformin</span>
+          <span class="suggestion-chip" data-medicine="Vitamin C">Vitamin C</span>
+          <span class="suggestion-chip" data-medicine="Ibuprofen">Ibuprofen</span>
+          <span class="suggestion-chip" data-medicine="Omeprazole">Omeprazole</span>
+        </div>
+      </div>
+
+      <!-- Radius Selector -->
+      <div class="finder-section">
+        <label class="finder-label">Search Radius</label>
+        <div class="radius-selector" id="radius-selector">
+          <button class="radius-btn active" data-radius="5">5 km</button>
+          <button class="radius-btn" data-radius="10">10 km</button>
+          <button class="radius-btn" data-radius="20">20 km</button>
+          <button class="radius-btn" data-radius="50">50 km</button>
+        </div>
+      </div>
+
+      <!-- Search Button -->
+      <button class="btn-primary w-full finder-search-btn" id="finder-search-btn">
+        🔍 Search Nearby Stores
+      </button>
+
+      <!-- Results Panel -->
+      <div class="finder-results-wrapper" id="finder-results-wrapper">
+        <div class="finder-results-header">
+          <span class="results-count" id="results-count">0 stores found</span>
+        </div>
+        <div class="finder-results-list" id="finder-results-list">
+          <div class="finder-empty">Add medicines and click search to find nearby stores.</div>
+        </div>
+      </div>
+
+      <!-- Map Container -->
+      <div class="finder-section map-section">
+        <label class="finder-label">Live Map View <span class="live-track-badge" id="live-track-badge">📍 Locating...</span></label>
+        <div class="finder-map-container" id="finder-map-container">
+          <div id="med-finder-map"></div>
+          <div class="map-type-toggle" id="map-type-toggle">
+            <button class="map-toggle-btn active" data-map="satellite" id="map-toggle-satellite" title="Satellite View">🛰️</button>
+            <button class="map-toggle-btn" data-map="street" id="map-toggle-street" title="Street View">🗺️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Finder Drawer Backdrop -->
+  <div class="drawer-overlay" id="finder-overlay"></div>
+
+</body>
+</html>
